@@ -1,0 +1,78 @@
+<%args>
+@countries
+@ranks
+@classes
+@soldiers
+</%args>
+
+% use JSON qw/encode_json/;
+
+<h1>XCOM Soldier Tracker</h1>
+
+<div id="soldiers-container">
+    <div id="control-panel" class="panel">
+        <h3>Control Panel</h3>
+        <p><img src="/static/images/action_add.png" class="action" id="add-soldier" /> Add Soldier</p>
+        <p><img src="/static/images/action_add.png" class="action" id="add-country" /> Add Country (unimplemented)</p>
+        <p><img src="/static/images/action_add.png" class="action" id="add-class" /> Add Class (unimplemented)</p>
+        <p><img src="/static/images/action_add.png" class="action" id="add-rank" /> Add Rank (unimplemented)</p>
+    </div>
+
+    <div id="best-of" class="panel">
+        <h3>Best Soldiers</h3>
+        <div></div>
+    </div>
+
+    <div id="up-and-coming" class="panel">
+        <h3>Up and Coming</h3>
+        <div></div>
+    </div>
+
+% for my $class (@classes) {
+    <div id="<% lc($class->{name}) %>-best" class="panel">
+        <h3><img src="/static/images/classes/<% $class->{name} %>.png" class="class_icon" /><% $class->{name} %> Best</h3>
+        <div></div>
+    </div>
+% }
+
+    <table id="soldiers-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Dead</th>
+                <th>Class ID</th>
+                <th>Class</th>
+                <th>Rank ID</th>
+                <th>Rank</th>
+                <th>Country ID</th>
+                <th>Country</th>
+                <th>Aim</th>
+                <th>Will</th>
+                <th>HP</th>
+                <th>Psionic</th>
+                <th>Points</th>
+                <th>Trend</th>
+                <th> -- </th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+% # Load Soldier Dialog
+<& /soldier/soldier_add.mason &>
+
+<div id="graph"></div>
+
+<script>
+    $(document).ready(function() {
+        xcom_init({
+            countries: <% encode_json(\@countries) %>,
+            ranks: <% encode_json(\@ranks) %>,
+            classes: <% encode_json(\@classes) %>,
+            soldiers: <% encode_json(\@soldiers) %>
+        });
+    });
+</script>

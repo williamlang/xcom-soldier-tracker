@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>XCOM Soldier Tracker</title>
+
+        <!-- Javascript -->
+        <script language="javascript" type="text/javascript" src="/static/javascript/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/jquery-ui.min.js"></script>
+
+        <!-- Data Tables -->
+        <script language="javascript" type="text/javascript" src="/static/javascript/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/jquery.dataTables.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/start/start.css" />
+
+        <!-- jqPlot -->
+        <script language="javascript" type="text/javascript" src="/static/javascript/jquery.jqplot.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/excanvas.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.canvasTextRenderer.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/jquery.jqplot.css" />
+
+        <!-- XCOM -->
+        <link rel="stylesheet" type="text/css" href="/static/css/default.css" /> 
+        <script language="javascript" type="text/javascript" src="/static/javascript/xcom.js"></script>
+    </head>
+    <body>
+        <div id="content">
+            <% $m->call_next %>
+        </div>
+    </body>
+</html>

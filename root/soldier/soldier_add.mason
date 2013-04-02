@@ -1,0 +1,63 @@
+<div id="soldier-add-dialog" style="display:none;">
+    <input type="hidden" name="soldier_id" value="" />
+
+    <div class="field-div">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" />
+    </div>
+
+    <div class="field-div">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" />
+    </div>
+
+    <div class="field-div">
+        <label for="nick_name">Nickname</label>
+        <input type="text" name="nick_name" />
+    </div>
+
+    <div class="field-div">
+        <label for="class">Class</label>
+        <select name="class_id"></select>
+    </div>
+
+    <div class="field-div">
+        <label for="rank">Rank</label>
+        <select name="rank_id"></select>
+    </div>
+
+    <div class="field-div">
+        <label for="rank">Country</label>
+        <div style="float:right;">
+            <img src="#" class="flag" />
+            <select name="country_id" style="width: 200px;"></select>
+        </div>
+    </div>
+
+    <div class="field-div">
+        <label for="will">Will</label>
+        <input name="will" style="width:50px;" value="0" />
+    </div>
+
+
+    <div class="field-div">
+        <label for="aim">Aim</label>
+        <input name="aim" style="width:50px;" value="0" />
+    </div>
+
+    <div class="field-div">
+        <label for="hp">HP</label>
+        <input name="hp" style="width:50px;" value="0" />
+    </div>
+
+    <div class="field-div">
+        <label for="psionic">Psionic</label>
+        <input type="checkbox" name="psionic" />
+    </div>
+
+    <div class="field-div">
+        <label for="dead">Dead</label>
+        <input type="checkbox" name="dead" />
+    </div>
+
+</div>

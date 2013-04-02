@@ -1,0 +1,6 @@
+<div id="add-rank-dialog" style="display:none;">
+    <div class="field-div">
+        <label for="rank_name">Name</label>
+        <input type="text" name="rank_name" />
+    </div>
+</div>

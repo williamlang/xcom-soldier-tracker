@@ -1,0 +1,93 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro|Roboto+Condensed);
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+}
+
+#content {
+    margin: 10px;
+}
+
+#soldiers-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#soldiers-table {
+    width: 100%;
+}
+
+#soldiers-table tbody tr:hover {
+    background-color: #87EB6C;
+}
+
+#loading td {
+    text-align:center;
+}
+
+#loading td img {
+    margin-top: 250px;
+}
+
+img.flag {
+    float: left;
+    margin-right: 3px;
+    width: 40px;
+    height: 20px;
+}
+
+img.action {
+    float: left;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+div.field-div {
+    margin-top: 5px;
+    border-bottom:1px #000000 dotted;
+    padding-bottom: 10px;
+}
+
+div.field-div input, div.field-div select, div.field-div textarea {
+    float: right;
+}
+
+div.field-div span {
+    float: right;
+}
+
+input, select, textarea {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 11px;
+}
+
+div.panel {
+    float: left;
+    border: 1px solid #000000;
+    padding: 10px;
+
+    border-radius: 10px;
+    margin-right: 30px;
+    min-width: 150px;
+}
+
+div.panel h3 {
+    margin-top: 0;
+    text-decoration: underline;
+}
+
+img.class_icon {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 3px;
+}
+
+#chart {
+    margin-left: auto;
+    margin-right: auto;
+}
