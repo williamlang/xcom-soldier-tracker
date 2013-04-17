@@ -61,13 +61,7 @@ sub soldier_rest_POST {
 
     my $soldier = $c->stash->{soldier};
 
-    if ($soldier->soldier_histories->count == 0) {
-        $soldier->create_related('soldier_histories', {
-            will => $soldier->will,
-            aim  => $soldier->aim,
-            hp   => $soldier->hp
-        });
-    }
+    my $add_history = ( $soldier->will != $data->{will} || $soldier->aim != $data->{aim} || $soldier->hp != $data->{hp} );
 
     my $result = $soldier->update( $data );
 
@@ -76,7 +70,7 @@ sub soldier_rest_POST {
             will => $soldier->will,
             aim  => $soldier->aim,
             hp   => $soldier->hp
-        });
+        }) if $add_history;
 
         $soldier = $c->model('Schema::Soldier')->find($soldier->id, {
             prefetch => [ qw/ country rank class soldier_histories /],
