@@ -15,8 +15,11 @@
         <!-- jqPlot -->
         <script language="javascript" type="text/javascript" src="/static/javascript/jquery.jqplot.min.js"></script>
         <script language="javascript" type="text/javascript" src="/static/javascript/excanvas.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.dateAxisRenderer.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
         <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.canvasTextRenderer.min.js"></script>
         <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/plugins/jqplot.categoryAxisRenderer.min.js"></script>
         <link rel="stylesheet" type="text/css" href="/static/css/jquery.jqplot.css" />
 
         <!-- XCOM -->

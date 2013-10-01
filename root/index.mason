@@ -68,7 +68,7 @@
 
 <script>
     $(document).ready(function() {
-        xcom_init({
+        xcom.init({
             countries: <% encode_json(\@countries) %>,
             ranks: <% encode_json(\@ranks) %>,
             classes: <% encode_json(\@classes) %>,
