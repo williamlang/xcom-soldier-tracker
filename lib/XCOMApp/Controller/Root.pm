@@ -1,6 +1,8 @@
 package XCOMApp::Controller::Root;
+
 use Moose;
 use namespace::autoclean;
+use XCOMApp::Schema::Result::GeneMod;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -46,10 +48,18 @@ sub index :Path :Args(0) {
         result_class => 'DBIx::Class::ResultClass::HashRefInflator'
     })->all;
 
+    my @gene_mods = $c->model('Schema::GeneMod')->search(undef, {
+        result_class => 'DBIx::Class::ResultClass::HashRefInflator'
+    })->all;
+
+    my @gene_mod_types = @{ $c->model('Schema::GeneMod')->result_source->column_info('type')->{ extra }->{ list } };
+
     $c->stash->{countries} = \@countries;
     $c->stash->{ranks}     = \@ranks;
     $c->stash->{classes}   = \@classes;
     $c->stash->{soldiers}  = \@soldiers;
+    $c->stash->{gene_mods} = \@gene_mods;
+    $c->stash->{gene_mod_types } = \@gene_mod_types;
 }
 
 =head2 default

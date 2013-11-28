@@ -1,0 +1,26 @@
+<%args>
+@gene_mod_types
+</%args>
+
+<div id="gene-mod-add-dialog" style="display:none;">
+    <form id="gene-mod-add-form" method="post" action="genemods">
+        <div class="field-div">
+            <label for="name">Name</label>
+            <input type="text" name="name" autocomplete="off" />
+        </div>
+
+        <div class="field-div">
+            <label for="name">Type</label>
+            <select name="type">
+% for ( @gene_mod_types ) {
+                <option value="<% $_ %>"><% ucfirst( $_ ) %></option>
+% }
+            </select>
+        </div>
+
+        <div class="field-div">
+            <label for="name">Points</label>
+            <input type="text" name="points" style="width:50px;" value="0" />
+        </div>
+    </form>
+</div>

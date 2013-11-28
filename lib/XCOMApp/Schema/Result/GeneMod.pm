@@ -1,12 +1,12 @@
 use utf8;
-package XCOMApp::Schema::Result::Class;
+package XCOMApp::Schema::Result::GeneMod;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-XCOMApp::Schema::Result::Class
+XCOMApp::Schema::Result::GeneMod
 
 =cut
 
@@ -30,11 +30,11 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime");
 
-=head1 TABLE: C<classes>
+=head1 TABLE: C<gene_mods>
 
 =cut
 
-__PACKAGE__->table("classes");
+__PACKAGE__->table("gene_mods");
 
 =head1 ACCESSORS
 
@@ -50,6 +50,17 @@ __PACKAGE__->table("classes");
   is_nullable: 0
   size: 45
 
+=head2 type
+
+  data_type: 'enum'
+  extra: {list => ["Brain","Eyes","Chest","Skin","Legs"]}
+  is_nullable: 0
+
+=head2 points
+
+  data_type: 'integer'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -57,6 +68,14 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "name",
   { data_type => "varchar", is_nullable => 0, size => 45 },
+  "type",
+  {
+    data_type => "enum",
+    extra => { list => ["Brain", "Eyes", "Chest", "Skin", "Legs"] },
+    is_nullable => 0,
+  },
+  "points",
+  { data_type => "integer", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -73,24 +92,24 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 soldiers
+=head2 soldier_gene_mods
 
 Type: has_many
 
-Related object: L<XCOMApp::Schema::Result::Soldier>
+Related object: L<XCOMApp::Schema::Result::SoldierGeneMod>
 
 =cut
 
 __PACKAGE__->has_many(
-  "soldiers",
-  "XCOMApp::Schema::Result::Soldier",
-  { "foreign.class_id" => "self.id" },
+  "soldier_gene_mods",
+  "XCOMApp::Schema::Result::SoldierGeneMod",
+  { "foreign.gene_mod_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-11-16 12:41:27
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:73m9UkKvanbps4Car8FdWg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-11-17 17:03:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Ur/eCouRNbOG1Y/by9IPVA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

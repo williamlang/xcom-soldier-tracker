@@ -31,7 +31,6 @@ var xcom = (function() {
     var invisible  = [ fields.ID.id, fields.CLASS_ID.id, fields.RANK_ID.id, fields.COUNTRY_ID.id ];
     var unsortable = [ fields.ACTIONS.id ];
 
-
     pub.init = function( properties ) {
         countries = properties.countries;
         ranks     = properties.ranks;
@@ -47,8 +46,8 @@ var xcom = (function() {
             "bFilter": true,
             "bSort": true,
             "aaSorting": [
-                [ fields.POINTS.id, "desc" ],
-                [ fields.DEAD.id, "asc" ]
+                [ fields.DEAD.id, "asc" ],
+                [ fields.POINTS.id, "desc" ]
             ],
             "aoColumnDefs": [
                 { "bVisible": false, "aTargets": invisible },
@@ -72,6 +71,7 @@ var xcom = (function() {
         $('#soldier-add-dialog input[name=aim]').spinner();
         $('#soldier-add-dialog input[name=will]').spinner();
         $('#soldier-add-dialog input[name=hp]').spinner();
+        $('#gene-mod-add-dialog input[name=points]').spinner();
 
         $('#add-soldier').click(function() {
             setup_soldier_form();
@@ -113,8 +113,57 @@ var xcom = (function() {
                 }
             });
         });
+
+        $('#add-medal').click(function() {
+            setup_medal_form();
+
+            $('#medal-add-dialog').dialog({
+                title: 'Add Medal',
+                modal: true,
+                width: 400,
+                height: 175,
+                buttons: {
+                    Save: function() {
+                        save_medal();
+                        $(this).dialog("close");
+                    },
+                    Cancel: function() {
+                        $(this).dialog("close");
+                    }
+                },
+                close: function() {
+
+                }
+            });
+        });
+
+        $('#add-gene-mod').click(function() {
+            $('#gene-mod-add-dialog').dialog({
+                title: 'Add Gene Mod',
+                modal: true,
+                width: 400,
+                height: 300,
+                buttons: {
+                    Save: function() {
+                        $('#gene-mod-add-form').ajaxSubmit({
+                            clearForm: true,
+                            dataType: 'json',
+                            success: function() {
+                                $('#gene-mod-add-dialog').dialog('close');
+                            }
+                        });
+                    },
+                    Cancel: function() {
+                        $(this).dialog("close");
+                    }
+                },
+                close: function() {
+
+                }
+            });
+        });
     }
-    
+
     function save_soldier(id, row) {
         var data = {
             first_name: $('#soldier-add-dialog input[name=first_name]').val(),
@@ -138,7 +187,7 @@ var xcom = (function() {
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(data),
-            type: 'POST',
+            type: id ? 'PUT' : 'POST',
             success: function(data) {
                 if (id) {
                     remove_soldier(id, row);
@@ -199,6 +248,8 @@ var xcom = (function() {
                     $('#soldier-add-dialog input[name=psionic]').prop('checked', soldier.psionic == 1);
                     $('#soldier-add-dialog input[name=dead]:checked').prop('checked', soldier.dead == 1);
 
+                    $('#soldier-add-dialog select[name=country_id]').change();
+
                     $('#soldier-add-dialog').dialog({
                         title: 'Edit Soldier',
                         modal: true,
@@ -258,7 +309,7 @@ var xcom = (function() {
                         });
 
                         var prev_history = soldier.soldier_histories[ soldier.soldier_histories.length - 2 ];
-                        
+
                         var aim_diff  = soldier.aim - prev_history.aim;
                         var will_diff = soldier.will - prev_history.will;
                         var hp_diff   = soldier.hp - prev_history.hp;
@@ -339,6 +390,10 @@ var xcom = (function() {
         update_country($('#soldier-add-dialog select[name=country_id]'));
     }
 
+    function setup_medal_form() {
+        $('#medal-add-dialog input[name=name]').val('');
+    }
+
     function clear_soldier_form() {
         $('#soldier-add-dialog input[type=text]').val('');
         $('#soldier-add-dialog input[name=aim]').val(0);
@@ -364,7 +419,7 @@ var xcom = (function() {
         hp   = parseFloat(hp);
         psionic = parseFloat(psionic);
 
-        return aim + will + hp + (psionic * 10);
+        return ( aim * 1.25 ) + will + hp + (psionic * 10);
     }
 
     function soldier_points(soldier) {
@@ -373,7 +428,7 @@ var xcom = (function() {
         hp   = parseFloat(soldier.hp);
         psionic = parseFloat(soldier.psionic);
 
-        return aim + will + hp + (psionic * 10);
+        return ( aim * 1.25 ) + will + hp + (psionic * 10);
     }
 
     function format_soldier_trend(soldier) {
@@ -383,7 +438,7 @@ var xcom = (function() {
 
         if (histories.length > 1) {
             var prev_history = histories[ histories.length - 2 ];
-                        
+
             var aim_diff  = soldier.aim - prev_history.aim;
             var will_diff = soldier.will - prev_history.will;
             var hp_diff   = soldier.hp - prev_history.hp;
@@ -392,7 +447,7 @@ var xcom = (function() {
                 return '<span style="display:none;">0</span><img src="/static/images/minimize.png" />';
             }
             else {
-                var trend_value = (aim_diff > 2 || will_diff > 2) ? 'arrow_top' : 'arrow_down';        
+                var trend_value = (aim_diff > 5 || will_diff > 7 ) ? 'arrow_top' : 'arrow_down';
                 return '<span style="display:none;">' + Math.max(aim_diff, will_diff) + '</span><img src="/static/images/' + trend_value + '.png" />';
             }
         }
@@ -418,7 +473,7 @@ var xcom = (function() {
         if (remove) {
             soldiers.splice(remove, 1);
         }
-        
+
         // Data Tables bug -- removing last row makes it herp the maximum derp
         if (soldiers.length == 0) {
             table.fnClearTable();
@@ -446,7 +501,7 @@ var xcom = (function() {
 
         if (country) {
             img.attr('src', '/static/images/flags/' + country.iso2 + '.png');
-            img.show();            
+            img.show();
         }
         else {
             img.hide();
@@ -454,10 +509,12 @@ var xcom = (function() {
     }
 
     function update_best() {
+        if ( soldiers.length == 0 ) return;
+
         var best = [];
 
         $.each(soldiers, function( index, soldier ) {
-            best.push( soldier );
+            if ( soldier.dead == 0) best.push( soldier );
         });
 
         best = best.sort(function(a, b) {
@@ -465,17 +522,20 @@ var xcom = (function() {
         });
 
         $('#best-of div').html('');
-        for ( var i = 0; i <= 4; i++ ) {
+        for ( var i = 0; i <= 5; i++ ) {
             var class_name = best[i]['class'] ? best[i]['class'].name : null;
 
             $('#best-of div').append(
-                $('<p>').append(
+                $('<p>').attr('id', 'best-' + best[i].id ).append(
                     class_name ? $('<img>').attr('src', '/static/images/classes/' + class_name + '.png').addClass('class_icon') : ''
                 ).append(
                     soldier_name(best[i])
                 ).append(
                     ' (' + soldier_points(best[i]) + ')'
-                )
+                ).click(function() {
+                    var id = $(this).attr('id').replace('best-', '');
+                    $('#edit-' + id).click();
+                })
             );
         }
     }
@@ -487,12 +547,25 @@ var xcom = (function() {
             if (!soldier['class'] && soldier.dead == 0) up_and_coming.push(soldier);
         });
 
+        if ( up_and_coming.length == 0 ) {
+            // determine lowest rank of all soldiers
+            var lowest_rank = ranks[ ranks.length - 1];
+
+            $.each(soldiers, function(index, soldier) {
+                lowest_rank = soldier.rank.id < lowest_rank.id && soldier.dead == 0 ? soldier.rank : lowest_rank;
+            });
+
+            $.each(soldiers, function(index, soldier) {
+                if ( soldier.rank.id == lowest_rank.id && soldier.dead == 0) up_and_coming.push(soldier);
+            });
+        }
+
         up_and_coming = up_and_coming.sort(function(a, b) {
             return soldier_points(b) - soldier_points(a);
         });
 
         $('#up-and-coming div').html('');
-        for (var i = 0; i < Math.min(up_and_coming.length, 5); i++) {
+        for (var i = 0; i < Math.min(up_and_coming.length, 6); i++) {
             $('#up-and-coming div').append(
                 $('<p>').attr('id', 'up-and-coming-' + up_and_coming[i].id)
                 .append(
@@ -517,7 +590,7 @@ var xcom = (function() {
         });
 
         $.each(soldiers, function(index, soldier) {
-            if (soldier['class'] && best_of[soldier['class'].name]) {
+            if (soldier['class'] && best_of[soldier['class'].name] && soldier.dead == 0) {
                 best_of[soldier['class'].name].push(soldier);
             }
         });

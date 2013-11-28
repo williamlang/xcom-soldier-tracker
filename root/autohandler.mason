@@ -3,9 +3,16 @@
     <head>
         <title>XCOM Soldier Tracker</title>
 
-        <!-- Javascript -->
+        <!-- Underscore -->
+        <script language="javascript" type="text/javascript" src="/static/javascript/underscore.min.js"></script>
+
+        <!-- Backbone -->
+        <script language="javascript" type="text/javascript" src="/static/javascript/backbone.min.js"></script>
+
+        <!-- jQuery -->
         <script language="javascript" type="text/javascript" src="/static/javascript/jquery.min.js"></script>
         <script language="javascript" type="text/javascript" src="/static/javascript/jquery-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/javascript/jquery.form.min.js"></script>
 
         <!-- Data Tables -->
         <script language="javascript" type="text/javascript" src="/static/javascript/jquery.dataTables.min.js"></script>
@@ -23,7 +30,7 @@
         <link rel="stylesheet" type="text/css" href="/static/css/jquery.jqplot.css" />
 
         <!-- XCOM -->
-        <link rel="stylesheet" type="text/css" href="/static/css/default.css" /> 
+        <link rel="stylesheet" type="text/css" href="/static/css/default.css" />
         <script language="javascript" type="text/javascript" src="/static/javascript/xcom.js"></script>
     </head>
     <body>

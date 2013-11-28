@@ -3,6 +3,7 @@
 @ranks
 @classes
 @soldiers
+@gene_mod_types
 </%args>
 
 % use JSON qw/encode_json/;
@@ -13,9 +14,12 @@
     <div id="control-panel" class="panel">
         <h3>Control Panel</h3>
         <p><img src="/static/images/action_add.png" class="action" id="add-soldier" /> Add Soldier</p>
+        <p><img src="/static/images/action_add.png" class="action" id="add-medal" /> Add Medal</p>
+        <p><img src="/static/images/action_add.png" class="action" id="add-gene-mod"> Add Gene Mod</p>
         <p><img src="/static/images/action_add.png" class="action" id="add-country" /> Add Country (unimplemented)</p>
         <p><img src="/static/images/action_add.png" class="action" id="add-class" /> Add Class (unimplemented)</p>
         <p><img src="/static/images/action_add.png" class="action" id="add-rank" /> Add Rank (unimplemented)</p>
+        <p><img src="/static/images/action_delete.png" class="action" id="remove-soldiers" /> Remove All Soldiers</p>
     </div>
 
     <div id="best-of" class="panel">
@@ -64,6 +68,12 @@
 % # Load Soldier Dialog
 <& /soldier/soldier_add.mason &>
 
+% # Load Medal Dialog
+<& /medal/medal_add.mason &>
+
+% # Load Gene Mod Dialog
+<& /gene_mod/gene_mod_add.mason, gene_mod_types => \@gene_mod_types &>
+
 <div id="graph"></div>
 
 <script>
@@ -72,7 +82,7 @@
             countries: <% encode_json(\@countries) %>,
             ranks: <% encode_json(\@ranks) %>,
             classes: <% encode_json(\@classes) %>,
-            soldiers: <% encode_json(\@soldiers) %>
+            soldiers: <% encode_json(\@soldiers) %>,
         });
     });
 </script>

@@ -1,12 +1,12 @@
 use utf8;
-package XCOMApp::Schema::Result::Class;
+package XCOMApp::Schema::Result::MedalBonus;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-XCOMApp::Schema::Result::Class
+Schema::Result::MedalBonus
 
 =cut
 
@@ -30,21 +30,20 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime");
 
-=head1 TABLE: C<classes>
+=head1 TABLE: C<medal_bonuses>
 
 =cut
 
-__PACKAGE__->table("classes");
+__PACKAGE__->table("medal_bonuses");
 
 =head1 ACCESSORS
 
 =head2 id
 
   data_type: 'integer'
-  is_auto_increment: 1
   is_nullable: 0
 
-=head2 name
+=head2 bonus
 
   data_type: 'varchar'
   is_nullable: 0
@@ -54,8 +53,8 @@ __PACKAGE__->table("classes");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "name",
+  { data_type => "integer", is_nullable => 0 },
+  "bonus",
   { data_type => "varchar", is_nullable => 0, size => 45 },
 );
 
@@ -71,26 +70,9 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
-=head1 RELATIONS
 
-=head2 soldiers
-
-Type: has_many
-
-Related object: L<XCOMApp::Schema::Result::Soldier>
-
-=cut
-
-__PACKAGE__->has_many(
-  "soldiers",
-  "XCOMApp::Schema::Result::Soldier",
-  { "foreign.class_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-11-16 12:41:27
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:73m9UkKvanbps4Car8FdWg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-11-16 12:19:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HcYf+gSjb57HyXdoKWh2Zw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

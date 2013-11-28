@@ -214,6 +214,21 @@ __PACKAGE__->belongs_to(
   },
 );
 
+=head2 soldier_gene_mods
+
+Type: has_many
+
+Related object: L<XCOMApp::Schema::Result::SoldierGeneMod>
+
+=cut
+
+__PACKAGE__->has_many(
+  "soldier_gene_mods",
+  "XCOMApp::Schema::Result::SoldierGeneMod",
+  { "foreign.soldier_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 soldier_histories
 
 Type: has_many
@@ -229,9 +244,24 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 soldier_medals
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-04-01 21:22:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:veCIqSe0JM41LuUZBn9uuQ
+Type: has_many
+
+Related object: L<XCOMApp::Schema::Result::SoldierMedal>
+
+=cut
+
+__PACKAGE__->has_many(
+  "soldier_medals",
+  "XCOMApp::Schema::Result::SoldierMedal",
+  { "foreign.soldier_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-11-17 17:03:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ymZULouKP26dAZdQLTIAvA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

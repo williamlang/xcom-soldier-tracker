@@ -54,10 +54,10 @@ sub soldier_rest_GET {
     });
 }
 
-sub soldier_rest_POST {
+sub soldier_rest_PUT {
     my ( $self, $c ) = @_;
 
-    my $data = $c->req->data;
+    my $data = $c->req->data || $c->req->params;
 
     my $soldier = $c->stash->{soldier};
 
@@ -117,7 +117,7 @@ sub soldiers_rest_GET {
 sub soldiers_rest_POST {
     my ( $self, $c ) = @_;
 
-    my $data = $c->req->data;
+    my $data = $c->req->data || $c->req->params;
 
     my $soldier = $c->model('Schema::Soldier')->create( $data );
 
@@ -133,11 +133,12 @@ sub soldiers_rest_POST {
             result_class => 'DBIx::Class::ResultClass::HashRefInflator',
         });
 
-        $self->status_created($c, 
+        $self->status_created($c,
             location => $c->req->uri . '/' . $soldier->{id},
             entity => {
-            soldier => $soldier
-        });
+                soldier => $soldier
+            }
+        );
     }
     else {
         $self->status_bad_request($c, entity => {
@@ -146,6 +147,19 @@ sub soldiers_rest_POST {
     }
 }
 
+sub soldiers_delete_all : Path('soldiers/delete_all') : Args(0) : ActionClass('REST') {
+    my ( $self, $c ) = @_;
+}
+
+sub soldiers_delete_all_GET {
+    my ( $self, $c ) = @_;
+
+    $c->model('Schema::Soldier')->all->delete;
+
+    $self->status_ok($c, entity => { 
+        message => 'Soldiers deleted.' 
+    });
+}
 
 =head1 AUTHOR
 
