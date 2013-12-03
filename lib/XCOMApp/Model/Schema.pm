@@ -5,11 +5,9 @@ use base 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(
     schema_class => 'XCOMApp::Schema',
-    
+
     connect_info => {
-        dsn => 'dbi:mysql:xcom_app',
-        user => 'xcom_user',
-        password => '',
+        dsn => 'dbi:SQLite:dbname=xcom_app.sqlite'
     }
 );
 
